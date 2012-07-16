@@ -1,0 +1,13 @@
+# Nine leds, no buttons
+framboos.algorithm.AllOn
+framboos.algorithm.BinaryCount
+framboos.algorithm.Blink
+framboos.algorithm.Caterpillar
+framboos.algorithm.CaterpillarZigZag
+framboos.algorithm.GoRight
+framboos.algorithm.RandomAll
+framboos.algorithm.RandomOne
+framboos.algorithm.ZigZag
+
+# Eight leds, one button
+framboos.algorithm.ChangeOnButton
