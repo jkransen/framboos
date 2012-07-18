@@ -4,7 +4,7 @@ import framboos.OutPin;
 
 public class Tennis extends SevenLedsTwoButtonsAlgorithm {
 	
-	int previous = 0;
+	int previous = -1;
 	boolean goesUp = true;
 	boolean isAtButton1 = false;
 	boolean isAtButton2 = false;
