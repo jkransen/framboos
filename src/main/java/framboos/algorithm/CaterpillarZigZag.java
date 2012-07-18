@@ -10,14 +10,14 @@ public class CaterpillarZigZag extends NineLedsAlgorithm {
 
 		while (true) {
 			if (goesUp) {
-				for (int i=0; i < pins.length; i++) {
+				for (int i = 0; i < pins.length; i++) {
 					pins[i].setValue(!wasOne);
 					pause();
 				}
 				wasOne = !wasOne;
 			}
-			if (!goesUp) {
-				for (int i=pins.length - 1; i >= 0; i--) {
+			else {
+				for (int i = pins.length - 1; i >= 0; i--) {
 					pins[i].setValue(!wasOne);
 					pause();
 				}

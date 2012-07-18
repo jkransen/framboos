@@ -1,0 +1,23 @@
+Wiring
+
+  GPIO pins in the numbering used by wiringPi: 
+
++---+---+---+---+---+---+---+---+---+---+---+---+---+
+|   |   |GND|   |   | 1 |   | 4 | 5 |   | 6 |   |   |
++---+---+---+---+---+---+---+---+---+---+---+---+---+
+|   | 8 |   | 7 |   | 0 | 2 | 3 |   |   |   |   |   |
++---+---+---+---+---+---+---+---+---+---+---+---+---+
+
+  And here as seen when Pi is held upside down:
+
++---+---+---+---+---+---+---+---+---+---+---+---+---+
+|   |   |   |   |   | 3 | 2 | 0 |   | 7 |   | 8 |   |
++---+---+---+---+---+---+---+---+---+---+---+---+---+
+|   |   | 6 |   | 5 | 4 |   | 1 |   |   |GND|   |   |
++---+---+---+---+---+---+---+---+---+---+---+---+---+
+
+  For simplicity sake, I left out the assignments of the other pins.
+
+  For the Nine LED algorithms, connect pins 0 to 8 in that order to the LEDs.
+  For the algoithms that use 8 LEDs and a button, replace the LED on pin 8 with 
+  the button.

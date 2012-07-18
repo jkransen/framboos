@@ -6,7 +6,7 @@ public class ChangeOnButton extends EightLedsOneButtonAlgorithm {
 
 	@Override
 	public void lightLeds(OutPin[] pins) {
-		for (int i=0; i < pins.length; i++) {
+		for (int i = 0; i < pins.length; i++) {
 			pins[i].setValue(i % 2 == 0);
 		}
 		while (true) {
@@ -17,7 +17,6 @@ public class ChangeOnButton extends EightLedsOneButtonAlgorithm {
 
 	@Override
 	public void handleButtonPressed(OutPin[] pins) {
-		System.out.println("Button pressed");
 		for (OutPin pin : pins) {
 			pin.setValue(!pin.getValue());
 		}

@@ -10,6 +10,8 @@ public class AllOn extends NineLedsAlgorithm {
 		}
 		
 		while (true) {
+			// no changes except on button pressed
+			pause();
 		}
 	}
 

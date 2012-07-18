@@ -11,3 +11,4 @@ framboos.algorithm.ZigZag
 
 # Eight leds, one button
 framboos.algorithm.ChangeOnButton
+framboos.algorithm.ButtonChangeDirection
