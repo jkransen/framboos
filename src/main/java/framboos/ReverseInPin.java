@@ -1,9 +1,9 @@
 package framboos;
 
-public class ReverseInPin extends GpioPin {
+public class ReverseInPin extends InPin {
 
 	public ReverseInPin(int pinNumber) {
-		super(pinNumber, Direction.IN);
+		super(pinNumber);
 	}
 
 	@Override

@@ -12,6 +12,8 @@ public class GpioPin {
 	
 	protected final int pinNumber;
 	
+	protected boolean isClosing = false;
+	
 	public GpioPin(int pinNumber, Direction direction) {
 		this.pinNumber = mappedPins[pinNumber];
 		writeFile(getExportPath(), Integer.toString(this.pinNumber));
@@ -19,6 +21,9 @@ public class GpioPin {
 	}
 	
 	public boolean getValue() {
+		if (isClosing) {
+			return false;
+		}
 		try {
 			FileInputStream fis = new FileInputStream(getValuePath(pinNumber));
 			boolean value = (fis.read() == '1');
@@ -30,6 +35,7 @@ public class GpioPin {
 	}
 	
 	public void close() {
+		isClosing = true;
 		writeFile(getUnexportPath(), Integer.toString(pinNumber));
 	}
 	
