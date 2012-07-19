@@ -1,6 +1,7 @@
 package framboos.algorithm;
 
 import framboos.OutPin;
+import framboos.algorithm.util.Timer;
 
 public class ZigZag extends NineLedsAlgorithm {
 
@@ -25,7 +26,7 @@ public class ZigZag extends NineLedsAlgorithm {
 			previous = i;
 			i = goUp ? i + 1 : i - 1;
 			
-			pause();
+			Timer.pause();
 		}
 	}
 }

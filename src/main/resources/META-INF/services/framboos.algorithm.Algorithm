@@ -15,3 +15,6 @@ framboos.algorithm.ButtonChangeDirection
 
 # Seven leds, two buttons
 framboos.algorithm.Tennis
+
+# PWM led
+framboos.algorithm.GlowingLed

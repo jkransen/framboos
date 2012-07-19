@@ -2,6 +2,7 @@ package framboos.algorithm;
 
 import framboos.OutPin;
 import framboos.ReverseInPin;
+import framboos.algorithm.util.Timer;
 
 public abstract class EightLedsOneButtonAlgorithm implements Algorithm {
 	
@@ -19,19 +20,12 @@ public abstract class EightLedsOneButtonAlgorithm implements Algorithm {
 			public void run() {
 				while (!isClosed) {
 					checkButton();
-					pause();
+					Timer.pause();
 				}
 			}
 		}.start();
 	}
 
-	protected void pause() {
-		try {
-			Thread.sleep(100); // .1 sec
-		} catch (InterruptedException e) {
-		}
-	}
-	
 	public void tearDown() {
 		for (OutPin pin : pins) {
 			pin.close();

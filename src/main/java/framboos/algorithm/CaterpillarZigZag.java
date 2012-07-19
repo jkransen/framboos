@@ -1,6 +1,7 @@
 package framboos.algorithm;
 
 import framboos.OutPin;
+import framboos.algorithm.util.Timer;
 
 public class CaterpillarZigZag extends NineLedsAlgorithm {
 
@@ -12,14 +13,14 @@ public class CaterpillarZigZag extends NineLedsAlgorithm {
 			if (goesUp) {
 				for (int i = 0; i < pins.length; i++) {
 					pins[i].setValue(!wasOne);
-					pause();
+					Timer.pause();
 				}
 				wasOne = !wasOne;
 			}
 			else {
 				for (int i = pins.length - 1; i >= 0; i--) {
 					pins[i].setValue(!wasOne);
-					pause();
+					Timer.pause();
 				}
 				wasOne = !wasOne;
 			}

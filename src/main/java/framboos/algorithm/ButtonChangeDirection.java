@@ -1,6 +1,7 @@
 package framboos.algorithm;
 
 import framboos.OutPin;
+import framboos.algorithm.util.Timer;
 
 public class ButtonChangeDirection extends EightLedsOneButtonAlgorithm {
 	
@@ -20,7 +21,7 @@ public class ButtonChangeDirection extends EightLedsOneButtonAlgorithm {
 			pins[previous].setValue(false);
 			pins[current].setValue(true);
 			previous = current;
-			pause();
+			Timer.pause();
 		}
 	}
 

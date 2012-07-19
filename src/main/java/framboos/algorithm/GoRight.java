@@ -1,6 +1,7 @@
 package framboos.algorithm;
 
 import framboos.OutPin;
+import framboos.algorithm.util.Timer;
 
 public class GoRight extends NineLedsAlgorithm {
 
@@ -13,7 +14,7 @@ public class GoRight extends NineLedsAlgorithm {
 				pin.setValue(j % 3 == i);
 			}
 			i = (i + 1) % 3;
-			pause();
+			Timer.pause();
 		}
 	}
 }

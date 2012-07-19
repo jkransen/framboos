@@ -12,13 +12,6 @@ public abstract class NineLedsAlgorithm implements Algorithm {
 		}
 	}
 
-	protected void pause() {
-		try {
-			Thread.sleep(100); // .1 sec
-		} catch (InterruptedException e) {
-		}
-	}
-	
 	public void tearDown() {
 		for (OutPin pin : pins) {
 			pin.close();

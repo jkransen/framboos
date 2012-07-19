@@ -1,6 +1,7 @@
 package framboos.algorithm;
 
 import framboos.OutPin;
+import framboos.algorithm.util.Timer;
 
 public class RandomAll extends NineLedsAlgorithm {
 
@@ -9,7 +10,7 @@ public class RandomAll extends NineLedsAlgorithm {
 			for (OutPin pin : pins) {
 				pin.setValue(Math.random() < 0.5);
 			}
-			pause();
+			Timer.pause();
 		}
 	}
 

@@ -1,6 +1,7 @@
 package framboos.algorithm;
 
 import framboos.OutPin;
+import framboos.algorithm.util.Timer;
 
 public class ChangeOnButton extends EightLedsOneButtonAlgorithm {
 
@@ -11,7 +12,7 @@ public class ChangeOnButton extends EightLedsOneButtonAlgorithm {
 		}
 		while (true) {
 			// no changes except on button pressed
-			pause();
+			Timer.pause();
 		}
 	}
 

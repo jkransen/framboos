@@ -1,6 +1,7 @@
 package framboos.algorithm;
 
 import framboos.OutPin;
+import framboos.algorithm.util.Timer;
 
 public class Caterpillar extends NineLedsAlgorithm {
 
@@ -10,7 +11,7 @@ public class Caterpillar extends NineLedsAlgorithm {
 		while (true) {
 			for (OutPin pin : pins) {
 				pin.setValue(!wasOne);
-				pause();
+				Timer.pause();
 			}
 			wasOne = !wasOne;
 		}

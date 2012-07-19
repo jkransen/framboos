@@ -1,10 +1,11 @@
 package framboos.algorithm;
 
 import framboos.OutPin;
+import framboos.algorithm.util.Timer;
 
 public class Tennis extends SevenLedsTwoButtonsAlgorithm {
 	
-	int previous = -1;
+	int previous = 0;
 	boolean goesUp = true;
 	boolean isAtButton1 = false;
 	boolean isAtButton2 = false;
@@ -33,25 +34,27 @@ public class Tennis extends SevenLedsTwoButtonsAlgorithm {
 			isAtButton1 = current == 0;
 			isAtButton2 = current == numPins - 1;
 			previous = current;
-			pause(Math.max(80, delay--));
+			Timer.pause(delay--);
 		}
 	}
 	
-	private void showScore() {
-		System.out.println(points1 +" - "+ points2);
-	}
-
 	@Override
 	public void handleButton1Pressed() {
-		if (!goesUp && isAtButton1) {
+		if (isAtButton1) {
 			goesUp = true;
 		}
 	}
 
 	@Override
 	public void handleButton2Pressed() {
-		if (goesUp && isAtButton2) {
+		if (isAtButton2) {
 			goesUp = false;
 		}
+	}
+
+	private void showScore() {
+		System.out.println(points1 +" - "+ points2);
+		// reset delay so new rally starts slow
+		delay = 200;
 	}
 }

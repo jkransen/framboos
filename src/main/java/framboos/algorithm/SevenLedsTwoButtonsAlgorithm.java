@@ -3,6 +3,7 @@ package framboos.algorithm;
 import framboos.InPin;
 import framboos.OutPin;
 import framboos.ReverseInPin;
+import framboos.algorithm.util.Timer;
 
 public abstract class SevenLedsTwoButtonsAlgorithm implements Algorithm {
 	
@@ -24,17 +25,10 @@ public abstract class SevenLedsTwoButtonsAlgorithm implements Algorithm {
 			public void run() {
 				while (!isClosed) {
 					checkButtons();
-					pause(50);
+					Timer.pause(50);
 				}
 			}
 		}.start();
-	}
-	
-	protected void pause(int ms) {
-		try {
-			Thread.sleep(ms); // .1 sec
-		} catch (InterruptedException e) {
-		}
 	}
 	
 	public void tearDown() {
