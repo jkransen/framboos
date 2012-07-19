@@ -7,7 +7,7 @@ Code example to use an in pin:
   boolean isButtonPressed = button.getValue();
   button.close();
   
-Code example to use an in pin:
+Code example to use an out pin:
 
   OutPin led = new Outpin(0);
   led.setValue(true);
@@ -16,7 +16,8 @@ Code example to use an in pin:
 
 It is important to close pins that are created, so that they are released for 
 other programs.
-Pin assignment
+
+== Pin assignment ==
 
 GPIO pins in the numbering used by wiringPi: 
 
@@ -46,7 +47,7 @@ the Tennis game), use pins 7 and 8 for buttons, and leave the rest on the LEDs.
 
 Pin 1 is the only pin that supports PWM.
 
-Usage
+== Usage ==
 
 If you want to control the pins directly from your own code, simply run:
 
@@ -66,6 +67,9 @@ For a complete list of available pattern algorithms, examine this file:
 
   META-INF/services/framboos.algorithm.Algorithm
 
+== Wiring notes ==
 
+Please do use the resistors that come with the Starter Kit, or your own resistors if you don't use that kit. Connect them serially, which means like this:
+Connect one leg of the resistor to the - bottom line of the breadboard, where you also connected the ground. Connect the other side of the resistor with the short leg of the LED. Connect the long leg of the LED to whatever port you connect it to.
 
 
