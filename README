@@ -1,6 +1,24 @@
-Wiring
+Framboos is a small Java wrapper around the wiringPi library by Gordon 
+Henderson. It currently supports in and out pins. PWM pins are work in progress.
 
-  GPIO pins in the numbering used by wiringPi: 
+Code example to use an in pin:
+
+  InPin button = new InPin(8);
+  boolean isButtonPressed = button.getValue();
+  button.close();
+  
+Code example to use an in pin:
+
+  OutPin led = new Outpin(0);
+  led.setValue(true);
+  led.setValue(false);
+  led.close();
+
+It is important to close pins that are created, so that they are released for 
+other programs.
+Pin assignment
+
+GPIO pins in the numbering used by wiringPi: 
 
 +---+---+---+---+---+---+---+---+---+---+---+---+---+
 |   |   |GND|   |   | 1 |   | 4 | 5 |   | 6 |   |   |
@@ -8,7 +26,7 @@ Wiring
 |   | 8 |   | 7 |   | 0 | 2 | 3 |   |   |   |   |   |
 +---+---+---+---+---+---+---+---+---+---+---+---+---+
 
-  And here as seen when Pi is held upside down:
+The same diagram as seen when the Pi is held upside down:
 
 +---+---+---+---+---+---+---+---+---+---+---+---+---+
 |   |   |   |   |   | 3 | 2 | 0 |   | 7 |   | 8 |   |
@@ -16,8 +34,38 @@ Wiring
 |   |   | 6 |   | 5 | 4 |   | 1 |   |   |GND|   |   |
 +---+---+---+---+---+---+---+---+---+---+---+---+---+
 
-  For simplicity sake, I left out the assignments of the other pins.
+For simplicity sake, I left out the assignments of the other pins.
 
-  For the Nine LED algorithms, connect pins 0 to 8 in that order to the LEDs.
-  For the algoithms that use 8 LEDs and a button, replace the LED on pin 8 with 
-  the button.
+Next to the wrapper classes, I made some classes that make connected LEDs 
+light up in different patterns. For this to work, you need to connect the LEDs like I did. I use the Starter Kit from SK Pang, which contains a couple of LEDs, 2 buttons and 10 wires. 
+
+For the Nine LED algorithms, connect pins 0 to 8 in that order to the LEDs.
+For the algoithms that use 8 LEDs and a button, replace the LED on pin 8 with 
+the button. For the algorithms that use 7 LEDs and 2 buttons (currently only
+the Tennis game), use pins 7 and 8 for buttons, and leave the rest on the LEDs.
+
+Pin 1 is the only pin that supports PWM.
+
+Usage
+
+If you want to control the pins directly from your own code, simply run:
+
+  mvn install
+
+This will create a file target/framboos-X.Y.Z.jar
+
+To run one of the patterns, run the application itself:
+
+  java -jar target/framboos-X.Y.Z.jar
+
+This will pick a random pattern to light up the LEDs. You can also specify the pattern you want to run, like this:
+
+  java -jar target/framboos-X.Y.Z.jar caterpillar
+
+For a complete list of available pattern algorithms, examine this file:
+
+  META-INF/services/framboos.algorithm.Algorithm
+
+
+
+
