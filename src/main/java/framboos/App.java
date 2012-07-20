@@ -67,6 +67,22 @@ public class App {
 	}
 
 	private static Algorithm getAlgorithm(String name) {
+		try {
+			Class<?> matchingClass = Class.forName(name);
+			if (matchingClass.isAssignableFrom(Algorithm.class)) {
+				try {
+					Algorithm algorithm = matchingClass.asSubclass(Algorithm.class).newInstance();
+					return algorithm;
+				} catch (Exception e) {
+					throw new RuntimeException("Failed to instantiate algorithm class "+name);
+				}
+			}
+			else {
+				throw new RuntimeException("Class "+name+" is not a valid framboos.algorithm.Algorithm");
+			}
+		} catch (ClassNotFoundException e) {
+			// Failed, now try service lookup
+		}
 		for (Algorithm candidate : ServiceLoader.load(Algorithm.class)) {
 			if (candidate.getClass().getSimpleName().toLowerCase().matches(".*"+name.toLowerCase()+".*")) {
 				return candidate;
