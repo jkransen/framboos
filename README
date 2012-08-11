@@ -1,5 +1,5 @@
-Framboos is a small Java wrapper around the wiringPi library by Gordon 
-Henderson. It currently supports in and out pins. PWM pins are work in progress.
+Framboos is a small Java wrapper around the GPIO driver under /sys/class/gpio. 
+It supports in and out pins. PWM pins will be covered when the underlying driver does.
 
 Code example to use an in pin:
 
@@ -37,15 +37,14 @@ The same diagram as seen when the Pi is held upside down:
 
 For simplicity sake, I left out the assignments of the other pins.
 
-Next to the wrapper classes, I made some classes that make connected LEDs 
-light up in different patterns. For this to work, you need to connect the LEDs like I did. I use the Starter Kit from SK Pang, which contains a couple of LEDs, 2 buttons and 10 wires. 
+Next to the wrapper classes, I made some classes that make connected LEDs  light up in different 
+patterns. For this to work, you need to connect the LEDs like I did. I use the Starter Kit from 
+SK Pang, which contains a couple of LEDs, 2 buttons and 10 wires. At first I used 9 LEDs minus the 
+number of buttons used, as the Starter Kit has limited wires, but later I decided to wire all 9 LEDs 
+with custom wires, so there is no need to rewire when switching algorithms.
 
-For the Nine LED algorithms, connect pins 0 to 8 in that order to the LEDs.
-For the algoithms that use 8 LEDs and a button, replace the LED on pin 8 with 
-the button. For the algorithms that use 7 LEDs and 2 buttons (currently only
-the Tennis game), use pins 7 and 8 for buttons, and leave the rest on the LEDs.
-
-Pin 1 is the only pin that supports PWM.
+For the Nine LED algorithms, connect pins 0 to 7 in that order to the LEDs, and 10 as ninth.
+Add button 1 to pin 8, and button 2 to pin 9. 
 
 == Usage ==
 
@@ -69,7 +68,8 @@ For a complete list of available pattern algorithms, examine this file:
 
 == Wiring notes ==
 
-Please do use the resistors that come with the Starter Kit, or your own resistors if you don't use that kit. Connect them serially, which means like this:
-Connect one leg of the resistor to the - bottom line of the breadboard, where you also connected the ground. Connect the other side of the resistor with the short leg of the LED. Connect the long leg of the LED to whatever port you connect it to.
-
-
+Please do use the resistors that come with the Starter Kit, or your own resistors if you don't use 
+that kit. Connect them serially, which means like this: Connect one leg of the resistor to the 
+- (minus) bottom line of the breadboard, where you also connected the ground. Connect the other side
+of the resistor with the short leg of the LED. Connect the long leg of the LED to whatever port you
+connect it to.
