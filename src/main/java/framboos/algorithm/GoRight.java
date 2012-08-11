@@ -3,7 +3,7 @@ package framboos.algorithm;
 import framboos.OutPin;
 import framboos.algorithm.util.Timer;
 
-public class GoRight extends NineLedsAlgorithm {
+public class GoRight extends NineLedsTwoButtonsAlgorithm {
 
 	public void lightLeds(OutPin[] pins) {
 		int i = 0;

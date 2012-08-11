@@ -3,7 +3,7 @@ package framboos.algorithm;
 import framboos.OutPin;
 import framboos.algorithm.util.Timer;
 
-public class BinaryCount extends NineLedsAlgorithm {
+public class BinaryCount extends NineLedsTwoButtonsAlgorithm {
 
 	public void lightLeds(OutPin[] pins) {
 		int binaryNumber = 0;

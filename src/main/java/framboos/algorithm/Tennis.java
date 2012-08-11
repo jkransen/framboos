@@ -3,7 +3,7 @@ package framboos.algorithm;
 import framboos.OutPin;
 import framboos.algorithm.util.Timer;
 
-public class Tennis extends SevenLedsTwoButtonsAlgorithm {
+public class Tennis extends NineLedsTwoButtonsAlgorithm {
 	
 	int previous = 0;
 	boolean goesUp = true;
@@ -14,7 +14,7 @@ public class Tennis extends SevenLedsTwoButtonsAlgorithm {
 	int delay = 200;
 
 	@Override
-	public void execute(OutPin[] pins) {
+	public void lightLeds(OutPin[] pins) {
 		while (true) {
 			int current = goesUp ? previous + 1 : previous - 1;
 			int numPins = pins.length;

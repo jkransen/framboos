@@ -3,7 +3,7 @@ package framboos.algorithm;
 import framboos.OutPin;
 import framboos.algorithm.util.Timer;
 
-public class Blink extends NineLedsAlgorithm {
+public class Blink extends NineLedsTwoButtonsAlgorithm {
 
 	public void lightLeds(OutPin[] pins) {
 		boolean isOne = false;
@@ -16,5 +16,4 @@ public class Blink extends NineLedsAlgorithm {
 			Timer.pause();
 		}
 	}
-
 }

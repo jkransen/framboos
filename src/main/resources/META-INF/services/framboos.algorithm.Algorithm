@@ -9,12 +9,9 @@ framboos.algorithm.RandomAll
 framboos.algorithm.RandomOne
 framboos.algorithm.ZigZag
 
-# Eight leds, one button
+# Nine leds, one button
 framboos.algorithm.ChangeOnButton
 framboos.algorithm.ButtonChangeDirection
 
-# Seven leds, two buttons
+# Nine leds, two buttons
 framboos.algorithm.Tennis
-
-# PWM led
-framboos.algorithm.GlowingLed

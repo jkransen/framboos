@@ -3,7 +3,7 @@ package framboos.algorithm;
 import framboos.OutPin;
 import framboos.algorithm.util.Timer;
 
-public class RandomOne extends NineLedsAlgorithm {
+public class RandomOne extends NineLedsTwoButtonsAlgorithm {
 
 	public void lightLeds(OutPin[] pins) {
 		int previous = 0;
@@ -15,5 +15,4 @@ public class RandomOne extends NineLedsAlgorithm {
 			Timer.pause();
 		}
 	}
-
 }

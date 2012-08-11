@@ -3,7 +3,7 @@ package framboos.algorithm;
 import framboos.OutPin;
 import framboos.algorithm.util.Timer;
 
-public class ZigZag extends NineLedsAlgorithm {
+public class ZigZag extends NineLedsTwoButtonsAlgorithm {
 
 	public void lightLeds(OutPin[] pins) {
 		boolean goUp = true;

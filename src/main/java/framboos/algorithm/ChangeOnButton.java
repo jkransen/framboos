@@ -3,7 +3,7 @@ package framboos.algorithm;
 import framboos.OutPin;
 import framboos.algorithm.util.Timer;
 
-public class ChangeOnButton extends EightLedsOneButtonAlgorithm {
+public class ChangeOnButton extends NineLedsTwoButtonsAlgorithm {
 
 	@Override
 	public void lightLeds(OutPin[] pins) {
@@ -17,8 +17,8 @@ public class ChangeOnButton extends EightLedsOneButtonAlgorithm {
 	}
 
 	@Override
-	public void handleButtonPressed(OutPin[] pins) {
-		for (OutPin pin : pins) {
+	public void handleButton1Pressed() {
+		for (OutPin pin : getLeds()) {
 			pin.setValue(!pin.getValue());
 		}
 	}

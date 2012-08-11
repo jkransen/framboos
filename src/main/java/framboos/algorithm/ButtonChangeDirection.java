@@ -3,30 +3,30 @@ package framboos.algorithm;
 import framboos.OutPin;
 import framboos.algorithm.util.Timer;
 
-public class ButtonChangeDirection extends EightLedsOneButtonAlgorithm {
+public class ButtonChangeDirection extends NineLedsTwoButtonsAlgorithm {
 	
 	int previous = 0;
 	boolean goesUp = true;
 
 	@Override
-	public void lightLeds(OutPin[] pins) {
+	public void lightLeds(OutPin[] leds) {
 		while (true) {
 			int current = goesUp ? previous + 1 : previous - 1;
 			if (current < 0) {
-				current += pins.length;
+				current += leds.length;
 			}
-			if (current >= pins.length) {
-				current -= pins.length;
+			if (current >= leds.length) {
+				current -= leds.length;
 			}
-			pins[previous].setValue(false);
-			pins[current].setValue(true);
+			leds[previous].setValue(false);
+			leds[current].setValue(true);
 			previous = current;
 			Timer.pause();
 		}
 	}
 
 	@Override
-	public void handleButtonPressed(OutPin[] pins) {
+	public void handleButton1Pressed() {
 		goesUp = !goesUp;
 	}
 }
