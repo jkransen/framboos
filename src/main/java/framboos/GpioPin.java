@@ -7,8 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class GpioPin {
-
-	private static final int [] mappedPins = {17, 18, 21, 22, 23, 24, 25, 4, 0, 1, 8, 7, 10, 9, 11, 14, 15};
+	// REV 1:
+	// private static final int [] mappedPins = {17, 18, 21, 22, 23, 24, 25, 4, 0, 1, 8, 7, 10, 9, 11, 14, 15};
+	// REV 2:
+	private static final int [] mappedPins = {17, 18, 27, 22, 23, 24, 25, 4, 2, 3, 8, 7, 10, 9, 11, 14, 15};
 	
 	protected final int pinNumber;
 	
