@@ -12,6 +12,10 @@ public class GpioPin {
 	// REV 2:
 	private static final int [] mappedPins = {17, 18, 27, 22, 23, 24, 25, 4, 2, 3, 8, 7, 10, 9, 11, 14, 15};
 	
+	public static int[] getMappedPins() {
+		return mappedPins;
+	}
+	
 	protected final int pinNumber;
 	
 	protected boolean isClosing = false;
