@@ -8,6 +8,11 @@ public class OutPin extends GpioPin {
 		super(pinNumber, Direction.OUT);
 		setValue(false);
 	}
+
+	public OutPin(String pinName) {
+		super(getPinNumber(pinName), Direction.OUT, true);
+		setValue(false);
+	}
 	
 	public void setValue(boolean isOne) {
 		if (!isClosing) {

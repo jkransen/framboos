@@ -1,3 +1,5 @@
+UPDATED TO USE BEAGLEBOARD AND ALL LINUX GPIO BASED FS
+
 Framboos is a small Java wrapper around the GPIO driver under /sys/class/gpio. 
 It supports in and out pins. PWM pins will be covered when the underlying driver does.
 
@@ -18,6 +20,9 @@ It is important to close pins that are created, so that they are released for
 other programs.
 
 == Pin assignment ==
+
+When passing an INT to a constructor it will default to the wiringPi layout, when passing a STRING representation (i.e. GPIO2_1 for BeagleBone) it will direct address the pinout, bypassing wiringPi
+
 
 GPIO pins in the numbering used by wiringPi: 
 
