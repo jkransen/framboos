@@ -52,6 +52,9 @@ public class GpioPin {
 			fis.close();
 			return value;
 		} catch (IOException e) {
+			if(e.getMessage().contains("Permission Denied")) {
+				throw new RuntimeException("Permission denied to GPIO file: " + e.getMessage());
+			}
 			throw new RuntimeException("Could not read from GPIO file: " + e.getMessage());
 		}
 	}
@@ -63,10 +66,17 @@ public class GpioPin {
 	
 	protected void writeFile(String fileName, String value) {
 		try {
+			// check for permission
 			FileOutputStream fos = new FileOutputStream(fileName);
 			fos.write(value.getBytes());
 			fos.close();
 		} catch (IOException e) {
+			if(e.getMessage().contains("Permission denied")) {
+				throw new RuntimeException("Permission denied to GPIO file: " + e.getMessage());
+			} else if (e.getMessage().contains("busy")) {
+				System.out.println("GPIO is already exported, continuing");
+				return;
+			}
 			throw new RuntimeException("Could not write to GPIO file: " + e.getMessage());
 		}
 	}
