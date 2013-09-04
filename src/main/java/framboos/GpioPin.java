@@ -12,8 +12,9 @@ public class GpioPin {
 	// private static final int [] mappedPins = {17, 18, 21, 22, 23, 24, 25, 4, 0, 1, 8, 7, 10, 9, 11, 14, 15};
 	// REV 2:
 	private static final int [] mappedPins = {17, 18, 27, 22, 23, 24, 25, 4, 2, 3, 8, 7, 10, 9, 11, 14, 15};
-	public static Pattern pinPattern = Pattern.compile("(gpio)([0-9])_([0-9]*)");
-	public static Pattern pinPatternAlt = Pattern.compile("([0-9]*)");
+	public static Pattern pinPattern = Pattern.compile("(gpio)([0-9])_([0-9]*)", Pattern.CASE_INSENSITIVE);
+	public static Pattern pinPatternAlt = Pattern.compile("(gpio)([0-9]*)",Pattern.CASE_INSENSITIVE);
+	public static Pattern pinPatternNumber = Pattern.compile("([0-9]*)");
 
 	
 	public static int[] getMappedPins() {
@@ -106,11 +107,16 @@ public class GpioPin {
                 } else {
                         matcher = pinPatternAlt.matcher(pinName);
                         if(matcher.find()) {
+                                pinNumber = Integer.parseInt(matcher.group(2));
+								} else {
+	                        matcher = pinPatternNumber.matcher(pinName);
+	                        if(matcher.find()) {
                                 pinNumber = Integer.parseInt(matcher.group(1));
-                        } else {
-                                System.out.println("Could not match " + pinName + ". As a valid gpio pinout number");
-                                System.exit(1);
-                        }
+   	                     } else {
+                               System.out.println("Could not match " + pinName + ". As a valid gpio pinout number");
+                           	 System.exit(1);
+                        	}
+								}
 
                 }
                 return pinNumber;
