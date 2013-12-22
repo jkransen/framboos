@@ -6,6 +6,10 @@ public class ReverseInPin extends InPin {
 		super(pinNumber);
 	}
 
+	public ReverseInPin(String pinName) {
+		super(pinName);
+	}
+
 	@Override
 	public boolean getValue() {
 		return !super.getValue();

@@ -9,6 +9,11 @@ public class PwmPin extends GpioPin {
 		setValue(0);
 	}
 	
+	public PwmPin(String pinName) {
+		super(getPinNumber(pinName), Direction.PWM, true);
+		setValue(0);
+	}
+	
 	/**
 	 * Set the value in integer, from 0.0 (all off) to 1023 (all on)
 	 * @param value
