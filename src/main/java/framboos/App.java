@@ -1,12 +1,8 @@
 package framboos;
 
-import static framboos.FilePaths.*;
-
-import java.io.File;
 import java.util.ServiceLoader;
 
 import framboos.algorithm.Algorithm;
-
 
 /**
  * The main class
@@ -32,7 +28,6 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		checkWiredPi();
 		Algorithm algorithm = args.length > 0 ? getAlgorithm(args[0]) : pickAlgorithm(); 
 		final App app = new App(algorithm);
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -42,12 +37,6 @@ public class App {
 			}
 		});
 		app.start();
-	}
-
-	private static void checkWiredPi() {
-		if (!new File(getGpioPath()).exists()) {
-			throw new RuntimeException("WiredPi does not seem to be installed.");
-		}
 	}
 
 	/**
