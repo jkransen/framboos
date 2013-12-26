@@ -1,17 +1,10 @@
 package framboos;
+import GpioPin._
 
-public class ReverseInPin extends InPin {
+class ReverseInPin(pinNumber: Int, isDirect: Boolean) extends InPin(pinNumber, isDirect) {
 
-	public ReverseInPin(int pinNumber) {
-		super(pinNumber);
-	}
+  def this(pinNumber: Int) = this(mappedPins(pinNumber), isDirect = false)
+  def this(pinName: String) = this(getPinNumber(pinName), isDirect = true)
 
-	public ReverseInPin(String pinName) {
-		super(pinName);
-	}
-
-	@Override
-	public boolean getValue() {
-		return !super.getValue();
-	}
+  override def value = !super.value
 }

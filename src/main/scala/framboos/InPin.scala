@@ -1,8 +1,9 @@
-package framboos;
+package framboos
 
-class InPin(pinNumber: Int) extends GpioPin(pinNumber, In) {
-	def this(pinName: String) {
-		super(getPinNumber(pinName), Direction.IN, true);
-	}
+import GpioPin._
 
+class InPin(pinNumber: Int, isDirect: Boolean) extends GpioPin(pinNumber, In, isDirect) {
+
+  def this(pinNumber: Int) = this(mappedPins(pinNumber), isDirect = false)
+  def this(pinName: String) = this(getPinNumber(pinName), isDirect = true)
 }
