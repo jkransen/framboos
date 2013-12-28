@@ -1,5 +1,6 @@
 target/
-.setings/
+.settings/
 .project
 .classpath
+.cache
 *.class

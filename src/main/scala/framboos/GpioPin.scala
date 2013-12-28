@@ -16,14 +16,15 @@ class GpioPin(pinNumber: Int, direction: Direction, isDirect: Boolean) {
   // set the direction of the pin to either in or out
   writeFile(directionPath(pinNumber), direction.value)
 
-  val fis = new FileInputStream(valuePath(pinNumber))
-
   def value: Boolean = {
     if (isClosing) {
       false
     }
     try {
-      fis.read == '1'
+      val fis = new FileInputStream(valuePath(pinNumber))
+      val read = fis.read
+      fis.close
+      read == '1'
     } catch {
       case e: IOException => {
         if (e.getMessage().contains("Permission Denied")) {
@@ -40,7 +41,6 @@ class GpioPin(pinNumber: Int, direction: Direction, isDirect: Boolean) {
 
   def close {
     isClosing = true
-    fis.close
     writeFile(unexportPath, Integer.toString(pinNumber))
   }
 

@@ -8,3 +8,7 @@ class ReverseInPin(pinNumber: Int, isDirect: Boolean) extends InPin(pinNumber, i
 
   override def value = !super.value
 }
+
+object ReverseInPin {
+  def apply(pinNumber: Int) = new ReverseInPin(pinNumber)
+}

@@ -3,7 +3,6 @@ package framboos;
 import GpioPin._
 
 class OutPin(pinNumber: Int, isDirect: Boolean) extends GpioPin(pinNumber, Out, isDirect) {
-
   def this(pinNumber: Int) = this(mappedPins(pinNumber), isDirect = false)
   def this(pinName: String) = this(getPinNumber(pinName), isDirect = true)
 
@@ -20,4 +19,8 @@ class OutPin(pinNumber: Int, isDirect: Boolean) extends GpioPin(pinNumber, Out, 
     setValue(false)
     super.close
   }
+}
+
+object OutPin {
+  def apply(pinNumber: Int) = new OutPin(pinNumber)
 }
