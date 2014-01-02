@@ -2,6 +2,7 @@ package framboos.actor
 
 import akka.actor._
 import framboos._
+import CommonMessages._
 
 class OutPinActor(pinNumber: Int) extends Actor {
   

@@ -6,6 +6,8 @@ import framboos.async._
 
 class InPinActor(pinNumber: Int) extends Actor {
 
+  import CommonMessages._
+
   val inPin = ObservableInPin(pinNumber)
 
   var listeners = Set.empty[ActorRef]
@@ -20,7 +22,7 @@ class InPinActor(pinNumber: Int) extends Actor {
       listeners = listeners - listener
     }
   }
-  
+
   override def postStop {
     subscription.unsubscribe
   }
