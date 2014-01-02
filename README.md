@@ -1,28 +1,32 @@
 Java GPIO access
 ----------------
 
-Framboos is a small Java wrapper around the GPIO driver under /sys/class/gpio. The program that uses it must be run as root in order to access these files. It supports in and out pins. It does not support PWM, SPI, I2C. If you need any of that, use [Pi4J](http://pi4j.com) instead, which includes native libraries. This is meant to be a pure Java implementation that can be added as a simple dependency to any Java project.
+Framboos is a small Java wrapper around the default GPIO driver on Raspberry Pi. For this reason it does not depend on any additional native libraries. The program that uses it must be run as root in order to access the driver files under /sys/class/gpio/. It supports input and output pins, as well as serial (UART) communication. It does not support PWM, SPI or I2C. If you need any of that, use [Pi4J](http://pi4j.com) instead, which includes native code and the wiringPi library. This is meant to be a pure Java (Scala) implementation that can be added as a simple Maven dependency to any Java project for the Raspberry Pi.
 
 Java code example to use an input pin:
 
+    import framboos.InPin;
     InPin button = new InPin(8);
     boolean isButtonPressed = button.getValue();
     button.close();
   
 Java code example to use an output pin:
 
+    import framboos.OutPin;
     OutPin led = new Outpin(0);
     led.setValue(true);
     led.close();
 
 Scala code example to use an input pin:
 
+    import framboos.InPin
     val button = InPin(8)
     val isButtonPressed = button.value
     button.close
   
 Scala code example to use an output pin:
 
+    import framboos.OutPin
     val led = Outpin(0)
     led.setValue(true)
     led.close
@@ -32,23 +36,22 @@ It is important to close pins that are created, so that they are released for ot
 Extensions for Akka and asynchronous programming
 ------------------------------------------------
 
-Instead of creating and polling an input pin yourself, you can create an Observable that will run a piece of code any time the pin value changes. 
+Instead of creating and polling an input pin yourself, you can create an Observer that will run a function any time the pin value changes. 
 
 Sample scala code to observe an input pin:
 
-    val inPin = ObservableInPin(0)
-    val subscription = inPin.subscribe(newValue => println(s"New value $newValue")
+    import framboos.async.ObservableInPin
+    val inPin = ObservableInPin(8)
+    inPin.subscribe(newValue => println(s"New value $newValue")
 
-In an Akka application, you can create Actors that handle output based on received messages, or that send messages 
-themselves on changed input. 
+In an Akka application, you can create Actors that create output based on received Akka messages, or that send Akka messages themselves on changed GPIO/UART input. 
 
 TODO show Akka samples, for now, take a look at WireUp
 
 Pin assignment
 --------------
 
-When passing an INT to a constructor it will default to the wiringPi layout. 
-When passing a STRING representation (i.e. GPIO2_1 for BeagleBone) it will direct address the pinout, bypassing wiringPi.
+When passing an integer to a constructor it will default to the wiringPi layout. When passing a String representation (i.e. "GPIO2_1" for BeagleBone) it will directly address the pin, bypassing the wiringPi numbering. Note that this library does not depend on or use wiringPi under the hood, but by default it uses its numbering scheme instead of the native Broadcom numbers.
 
 GPIO pins in the numbering used by wiringPi: 
 
@@ -57,13 +60,13 @@ GPIO pins in the numbering used by wiringPi:
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 |   | 8 | 9 | 7 |   | 0 | 2 | 3 |   |   |   |   |   |
 
-The same diagram as seen when the Pi is held upside down:
+The same diagram as seen when the Pi is held upside down, with the GPIO headers towards you:
 
 |   |   |   |   |   | 3 | 2 | 0 |   | 7 | 9 | 8 |   |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 |   | 10| 6 |   | 5 | 4 |   | 1 |   |   |GND|   |   |
 
-For simplicity sake, I left out the assignments of the other pins.
+For simplicity sake, the assignments of the other pins are left out.
 
 Provided sample code
 --------------------
@@ -75,18 +78,27 @@ number of buttons used, as the Starter Kit has limited wires, but later I decide
 with custom wires, so there is no need to rewire when switching algorithms.
 
 For the Nine LED algorithms, connect pins 0 to 7 in that order to the LEDs, and 10 as ninth.
-Add button 1 to pin 8, and button 2 to pin 9. 
+Add button 1 to pin 8, and button 2 to pin 9. These pins have pull-up resistors to allow simple buttons that
+short-circuit when pressed.
 
 Usage
 -----
 
-If you want to control the pins directly from your own code, simply run:
+To control the pins directly from your own code, simply add this dependency to your pom.xml:
+
+    <dependency>
+        <groupId>framboos</groupId>
+        <artifactId>framboos</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
+And run this from the root of the framboos project:
 
     mvn install
 
-This will create a file target/framboos-X.Y.Z.jar
+This will create a file target/framboos-X.Y.Z.jar and install it into your local repository.
 
-To run one of the patterns, run the application itself:
+To run one of the patterns, run the application itself inside the jar:
 
     java -jar target/framboos-X.Y.Z.jar
 
@@ -101,8 +113,5 @@ For a complete list of available pattern algorithms, examine this file:
 Wiring notes
 ------------
 
-Please do use the resistors that come with the Starter Kit, or your own resistors if you don't use 
-that kit. Connect them serially, which means like this: Connect one leg of the resistor to the -
-(minus) bottom line of the breadboard, where you also connected the ground. Connect the other side
-of the resistor with the short leg of the LED. Connect the long leg of the LED to whatever port you
+Please do use the resistors that come with the Starter Kit (or your own resistors if you don't use that kit) when connecting LEDs, or the current will fry them. Connect them serially, which means like this: connect one leg of the resistor to the - (minus) bottom line of the breadboard, where you also connected the ground of the Raspberry Pi. Connect the other side of the resistor with the short leg of the LED. Connect the long leg of the LED to whatever port you
 connect it to.
