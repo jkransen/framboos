@@ -72,6 +72,8 @@ InPinActor will send NewValue messages, containing a boolean of the new value. S
 
 OutPin will accept NewValue(boolean) messages, and set the output pin accordingly. SerialPortActor acccepts SendMessage messages as well, and will send the containing String over the serial line. 
 
+Wired up like this, incoming serial input will be sent back with a prefix, and make the LED light up. Pressing the button will light the LED as well, and send a text over the serial line. Releasing the button will make the LED go off (even if it was triggered by incoming serial text).
+
 Pin assignment
 --------------
 
