@@ -1,7 +1,7 @@
 Java GPIO access
 ----------------
 
-Framboos is a small Java wrapper around the default GPIO driver on Raspberry Pi. For this reason it does not depend on any additional native libraries. The program that uses it must be run as root in order to access the driver files under /sys/class/gpio/. It supports input and output pins, as well as serial (UART) communication. It does not support PWM, SPI or I2C. If you need any of that, use [Pi4J](http://pi4j.com) instead, which includes native code and the wiringPi library. This is meant to be a pure Java (Scala) implementation that can be added as a simple Maven dependency to any Java project for the Raspberry Pi.
+Framboos is a small Java wrapper around the default GPIO driver on Linux boards like Raspberry Pi and BeagleBoard. For this reason it does not depend on any additional native libraries. The program that uses it must be run as root in order to access the driver files under /sys/class/gpio/. It supports input and output pins, as well as serial (UART) communication. It does not support PWM, SPI or I2C. If you need any of that, use [Pi4J](http://pi4j.com) instead, which includes native code and the wiringPi library. This is meant to be a pure Java (Scala) implementation that can be added as a simple Maven dependency to any Java project.
 
 Java code example to use an input pin:
 
@@ -44,14 +44,38 @@ Sample scala code to observe an input pin:
     val inPin = ObservableInPin(8)
     inPin.subscribe(newValue => println(s"New value $newValue")
 
-In an Akka application, you can create Actors that create output based on received Akka messages, or that send Akka messages themselves on changed GPIO/UART input. 
+In an Akka application, you can create Actors that create GPIO/UART output based on received Akka messages, or that send Akka messages themselves on changed GPIO/UART input. 
 
-TODO show Akka samples, for now, take a look at WireUp
+WireUp is a provided sample Akka actor, that shows what the InPinActor, OutPinActor and SerialPortActor can do:
+
+    val inPin8 = context.actorOf(Props(new InPinActor(8)), name = "inPin8")
+    inPin8 ! AddListener(self)
+
+    val outPin0 = context.actorOf(Props(new OutPinActor(0)), name = "outPin0")
+
+    val serialPort = context.actorOf(Props(new SerialPortActor("ttyAMA0")), name = "serialPort")
+    serialPort ! AddListener(self)
+
+    def receive: Receive = {
+        case NewValue(value: Boolean) => {
+            outPin0 ! NewValue(value)
+            val pressed = if (value) "pressed" else "released"
+            serialPort ! SendMessage(s"Button $pressed at ${System.currentTimeMillis}\n")
+        }
+        case ReceiveMessage(message: String) => {
+            outPin0 ! NewValue(true)
+            serialPort ! SendMessage(s"Received your message: $message\n")
+        }
+    }
+
+InPinActor will send NewValue messages, containing a boolean of the new value. SerialPortActor will send ReceiveMessage messages for every line of text received on the serial port (which here is /dev/ttyAMA0, the default serial Rx/Tx pins on the GPIO header of the Raspberry Pi). 
+
+OutPin will accept NewValue(boolean) messages, and set the output pin accordingly. SerialPortActor acccepts SendMessage messages as well, and will send the containing String over the serial line. 
 
 Pin assignment
 --------------
 
-When passing an integer to a constructor it will default to the wiringPi layout. When passing a String representation (i.e. "GPIO2_1" for BeagleBone) it will directly address the pin, bypassing the wiringPi numbering. Note that this library does not depend on or use wiringPi under the hood, but by default it uses its numbering scheme instead of the native Broadcom numbers.
+When passing an integer to a constructor it will default to the wiringPi layout. When passing a String representation (i.e. "GPIO2_1" for BeagleBone) it will directly address the pin, bypassing the wiringPi numbering. Note that this library does not depend on or use wiringPi under the hood, but by default it uses its numbering scheme instead of e.g. the native Broadcom numbers in the case of Raspberry Pi.
 
 GPIO pins in the numbering used by wiringPi: 
 
