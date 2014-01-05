@@ -16,7 +16,8 @@ object ObservableInPin {
     intervals.subscribe(next => {
       val currentValue = inPin.value
       if (currentValue != lastValue) {
-        println(s"value of in#$pinNumber changed to $currentValue")
+        // TODO access Akka logging?
+        // log.debug(s"value of in#$pinNumber changed to $currentValue")
         subject.onNext(currentValue)
       }
       lastValue = currentValue

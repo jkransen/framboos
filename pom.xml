@@ -139,5 +139,5 @@
 			<id>sparetimelabs</id>
 			<url>http://www.sparetimelabs.com/maven2</url>
 		</repository>
- </repositories>
+	</repositories>
 </project>

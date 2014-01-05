@@ -4,6 +4,10 @@ import akka.actor._
 import framboos._
 import framboos.async._
 
+object InPinActor {
+  def props(pinNumber: Int): Props = Props(new InPinActor(pinNumber))
+}
+
 class InPinActor(pinNumber: Int) extends Actor {
 
   import CommonMessages._

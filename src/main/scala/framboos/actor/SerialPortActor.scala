@@ -10,6 +10,7 @@ import java.io._
 import CommonMessages._
 
 object SerialPortActor {
+  def props(portName: String): Props = Props(new SerialPortActor(portName))
 
   /** Message to be sent over serial connection */
   case class SendMessage(message: String) extends Incoming
@@ -18,7 +19,7 @@ object SerialPortActor {
   case class ReceiveMessage(message: String) extends Outgoing
 }
 
-class SerialPortActor(portName: String) extends Actor {
+class SerialPortActor(portName: String) extends Actor with ActorLogging {
 
   import SerialPortActor._
 
@@ -26,19 +27,21 @@ class SerialPortActor(portName: String) extends Actor {
 
   def receive = connecting
 
-  async {
+  connect
+  
+  def connect = async {
     findPort(portName) match {
       case Some(port) => {
-        println(s"Port found: $portName")
+        log.info(s"Port found: $portName")
         val in = new BufferedReader(new InputStreamReader(port.getInputStream))
 
         port.addEventListener(new SerialPortEventListener {
           def serialEvent(event: SerialPortEvent) {
             if (event.getEventType == SerialPortEvent.DATA_AVAILABLE) {
-              println(s"New serial input")
+              log.debug("New serial input")
               while (in.ready) {
                 val nextLine = in.readLine
-                println(nextLine)
+                log.debug(s"Receiving message: $nextLine")
                 listeners foreach { _ ! ReceiveMessage(nextLine) }
               }
             }
@@ -46,12 +49,12 @@ class SerialPortActor(portName: String) extends Actor {
         })
 
         val out = new BufferedWriter(new OutputStreamWriter(port.getOutputStream))
-        out.write("Hello from SerialPortActor, please stand by for messages\n")
+        out.write("Hello from SerialPortActor\n")
         out.flush
         context.become(connected(in, out), true)
       }
       case None => {
-        println(s"Could not find port $portName")
+        log.error(s"Could not find port $portName")
       }
     }
   }
@@ -90,7 +93,7 @@ class SerialPortActor(portName: String) extends Actor {
       listeners = listeners - listener
     }
     case SendMessage(message: String) => async {
-      println(s"Not connected, could not deliver message:\n$message")
+      log.warning(s"Not connected, could not deliver message: $message")
     }
   }
 
@@ -102,12 +105,9 @@ class SerialPortActor(portName: String) extends Actor {
       listeners = listeners - listener
     }
     case SendMessage(message: String) => async {
-      println(s"Sending message: $message")
-      out.write(message)
+      log.debug(s"Sending message: $message")
+      out.write(message + '\n')
       out.flush
     }
-  }
-
-  override def postStop {
   }
 }
