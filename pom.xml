@@ -137,7 +137,7 @@
 	<repositories>
 		<repository>
 			<id>sparetimelabs</id>
-			<url>http://www.sparetimelabs.com/maven2</url>
+			<url>https://www.sparetimelabs.com/maven2</url>
 		</repository>
 	</repositories>
 </project>
